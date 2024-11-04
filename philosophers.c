@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:47:57 by mcoskune          #+#    #+#             */
-/*   Updated: 2024/10/28 20:37:40 by mcoskune         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:59:07 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,15 @@ static void	join_philosophers(t_philo *philo)
 	int	i;
 
 	i = 0;
+	// print_msg(philo, -1, get_current_time(philo), "MAIN WAITING TO JOIN PHILOS");
+	// print_msg(philo, -1, philo->num_of_philo, "NUM OF PHILO FROM MAIN");
 	while (i < philo->num_of_philo)
 	{
 		pthread_join(philo->profs[i]->prof, NULL);
 		i++;
+		print_msg(philo, -1, get_current_time(philo), "MAIN JOINED A PHILO");
 	}
+	printf("JOINED PHILOS\n");
 }
 
 static int	create_judge(t_philo *philo)
@@ -96,6 +100,7 @@ int	main(int ac, char **av)
 	pthread_mutex_unlock(&philo.start_sig_mutex);
 	join_philosophers(&philo);
 	pthread_join(philo.judge_dredd, NULL);
+	printf("JOINED DREDD\n");
 	exit_cleanup(&philo, 0, 0);
 	return (EXIT_SUCCESS);
 }

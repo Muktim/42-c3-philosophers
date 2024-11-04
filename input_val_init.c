@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 00:31:35 by mcoskune          #+#    #+#             */
-/*   Updated: 2024/10/29 11:30:11 by mcoskune         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:06:16 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	init_profs(t_philo *philo)
 		philo->profs[i]->last_meal = 0;
 		philo->profs[i]->fork[0] = i;
 		philo->profs[i]->fork[1] = i + 1;
-		if (philo->profs[i]->prof_id %2 == 0)
+		if (philo->profs[i]->prof_id %2 == 0) //&& philo->num_of_philo != 2
 		{
 			philo->profs[i]->fork[0] = i + 1;
 			philo->profs[i]->fork[1] = i;

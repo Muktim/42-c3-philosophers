@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 19:58:51 by mcoskune          #+#    #+#             */
-/*   Updated: 2024/10/29 00:29:29 by mcoskune         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:43:29 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ static int	check_death(t_philo *philo, t_prof *prof, int i)
 		pthread_mutex_lock(&philo->kill_sig_mutex);
 		philo->kill_signal = true;
 		printf("%lld %d died\n", get_current_time(philo), i + 1);
+		printf("DREDD IS HERE for prof %d\n", i + 1);
 		pthread_mutex_unlock(&philo->kill_sig_mutex);
 		pthread_mutex_unlock(&philo->print_mutex);
-		pthread_mutex_unlock(&philo->profs[i]->meal_mutex);
 		return (1);
 	}
 	return (0);
@@ -61,13 +61,18 @@ static void	dredd_cycle(t_philo *philo)
 		{
 			pthread_mutex_lock(&philo->profs[i]->meal_mutex);
 			if (check_death(philo, philo->profs[i], i) != 0)
+			{
+				print_msg(philo, -1, get_current_time(philo), "DREDD SPOTTED DEATH");
+				pthread_mutex_unlock(&philo->profs[i]->meal_mutex);
 				return ;
+			}
 			if (philo->min_eat_req != -1)
 			{
 				if (check_all_eaten(philo, philo->profs[i], &all_eaten) == 0)
 					return ;
 			}
-			pthread_mutex_unlock(&philo->profs[i++]->meal_mutex);
+			pthread_mutex_unlock(&philo->profs[i]->meal_mutex);
+			i++;
 		}
 	}
 }
@@ -85,5 +90,6 @@ void	*judge_routine(void *argv)
 	}
 	pthread_mutex_unlock(&philo->start_sig_mutex);
 	dredd_cycle(philo);
+	print_msg(philo, -1, get_current_time(philo), "DREDD IS DONE");
 	return (NULL);
 }
