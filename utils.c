@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 00:40:50 by mcoskune          #+#    #+#             */
-/*   Updated: 2024/11/04 17:02:31 by mcoskune         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:13:01 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_msg(t_philo *philo, int prof_id, long long time, char *str)
 	pthread_mutex_unlock(&philo->print_mutex);
 }
 
-long long	get_current_time(t_philo *philo)
+long long	get_cur_time(t_philo *philo)
 {
 	struct timeval	time;
 

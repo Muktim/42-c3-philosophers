@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 19:58:51 by mcoskune          #+#    #+#             */
-/*   Updated: 2024/11/04 16:43:29 by mcoskune         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:07:36 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ static int	check_all_eaten(t_philo *philo, t_prof *prof, int *all_eaten)
 	return (1);
 }
 
-static int	check_death(t_philo *philo, t_prof *prof, int i)
+static int	investigate_death(t_philo *philo, t_prof *prof, int i)
 {
-	if (get_current_time(philo) - prof->last_meal >= philo->dt_die)
+	if (get_cur_time(philo) - prof->last_meal >= philo->dt_die)
 	{
 		pthread_mutex_lock(&philo->print_mutex);
 		pthread_mutex_lock(&philo->kill_sig_mutex);
 		philo->kill_signal = true;
-		printf("%lld %d died\n", get_current_time(philo), i + 1);
-		printf("DREDD IS HERE for prof %d\n", i + 1);
+		printf("%lld %d died\n", get_cur_time(philo), i + 1);
+		printf("DREDD: Prof %d betrayed the law!\n", i + 1);
 		pthread_mutex_unlock(&philo->kill_sig_mutex);
 		pthread_mutex_unlock(&philo->print_mutex);
 		return (1);
@@ -60,9 +60,8 @@ static void	dredd_cycle(t_philo *philo)
 		while (i < philo->num_of_philo)
 		{
 			pthread_mutex_lock(&philo->profs[i]->meal_mutex);
-			if (check_death(philo, philo->profs[i], i) != 0)
+			if (investigate_death(philo, philo->profs[i], i) != 0)
 			{
-				print_msg(philo, -1, get_current_time(philo), "DREDD SPOTTED DEATH");
 				pthread_mutex_unlock(&philo->profs[i]->meal_mutex);
 				return ;
 			}
@@ -90,6 +89,5 @@ void	*judge_routine(void *argv)
 	}
 	pthread_mutex_unlock(&philo->start_sig_mutex);
 	dredd_cycle(philo);
-	print_msg(philo, -1, get_current_time(philo), "DREDD IS DONE");
 	return (NULL);
 }

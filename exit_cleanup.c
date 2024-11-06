@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 14:51:04 by mcoskune          #+#    #+#             */
-/*   Updated: 2024/10/28 17:36:40 by mcoskune         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:48:19 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	clear_mutex(t_philo *philo, int stage, int iteration)
 		pthread_mutex_destroy(&philo->start_sig_mutex);
 	if (stage > 4 || stage == 0)
 	{
-		// pthread_mutex_destroy(&philo->judge_mutex);
 		i = 0;
 		while (i < iteration)
 		{

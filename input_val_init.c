@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 00:31:35 by mcoskune          #+#    #+#             */
-/*   Updated: 2024/11/04 17:06:16 by mcoskune         ###   ########.fr       */
+/*   Updated: 2024/11/06 13:31:51 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,9 @@ static int	init_profs(t_philo *philo)
 		philo->profs[i]->last_meal = 0;
 		philo->profs[i]->fork[0] = i;
 		philo->profs[i]->fork[1] = i + 1;
-		if (philo->profs[i]->prof_id %2 == 0) //&& philo->num_of_philo != 2
-		{
-			philo->profs[i]->fork[0] = i + 1;
-			philo->profs[i]->fork[1] = i;
-		}
 		if (i == philo->num_of_philo - 1)
 			philo->profs[i]->fork[1] = 0;
-		philo->profs[i]->philo_main = philo;
-		i++;
+		philo->profs[i++]->philo_main = philo;
 	}
 	return (0);
 }
@@ -74,7 +68,7 @@ int	clean_initialize(t_philo *philo, int ac, char **av)
 	philo->dt_die = ft_atoi(av[2]);
 	philo->dt_eat = ft_atoi(av[3]);
 	philo->dt_sleep = ft_atoi(av[4]);
-	philo->dt_think = (philo->dt_die - philo->dt_eat - philo->dt_sleep);
+	philo->dt_think = (philo->dt_die - philo->dt_eat - philo->dt_sleep) / 2;
 	philo->min_eat_req = -1;
 	if (ac == 6)
 		philo->min_eat_req = ft_atoi(av[5]);
@@ -113,7 +107,7 @@ int	input_validate(int ac, char **av)
 				return (msg("Error - AV - Dwarf in Elven army spotted!\n"), 3);
 			j++;
 		}
-		if (ft_atol(av[i]) >= INT_MAX || ft_atol(av[i]) < 0)
+		if (ft_atol(av[i]) >= INT_MAX || ft_atol(av[i]) <= 0)
 			return (msg("Error - AV - These INT are mutated!!\n"), 4);
 		i++;
 	}

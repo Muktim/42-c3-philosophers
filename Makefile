@@ -6,8 +6,8 @@ LINKFLAGS = -pthread
 CFLAGS =	-Wall -Wextra -Werror \
 			-g3 -gdwarf-3 \
 			-O0 \
+			-pthread \
 			-fsanitize=thread \
-			-pthread
 
 SRC_DIR = ./
 OBJ_DIR = ./obj/
@@ -15,6 +15,7 @@ OBJ_DIR = ./obj/
 SRC =	philosophers.c \
 		input_val_init.c \
 		utils.c \
+		philo_actions.c \
 		exit_cleanup.c \
 		philo_routine.c \
 		judge_routine.c \

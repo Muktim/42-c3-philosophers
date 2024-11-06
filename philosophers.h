@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:48:23 by mcoskune          #+#    #+#             */
-/*   Updated: 2024/10/28 19:48:11 by mcoskune         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:00:09 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,17 @@ int			clean_initialize(t_philo *philo, int ac, char **av);
 void		*philo_routine(void *argv);
 void		*judge_routine(void *argv);
 void		mini_waits(t_philo *philo, int delta_t);
+void		eat_routine(t_philo *philo, t_prof *prof);
+void		think_routine(t_philo *philo, t_prof *prof);
+void		sleep_routine(t_philo *philo, t_prof *prof);
 
 /*------- UTILITIY_FUNCTIONS -------*/
 void		msg(const char *message);
 int			ft_atoi(const char *str);
 long		ft_atol(const char *str);
-long long	get_current_time(t_philo *philo);
+long long	get_cur_time(t_philo *philo);
 void		print_msg(t_philo *philo, int prof_id, long long time, char *str);
+bool		check_death(t_philo *philo);
 
 /*------- CLEANUP -------*/
 void		exit_cleanup(t_philo *philo, int stage, int iteration);
